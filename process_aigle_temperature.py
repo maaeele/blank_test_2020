@@ -7,7 +7,9 @@ Created on Fri Oct 23 11:06:14 2020
 """
 
 #Import Numpy
+
 import numpy as np
+from matplotlib import pyplot as plt
 
 # Import de Pandas
 import pandas as pd
@@ -41,18 +43,14 @@ def average_temperature(year_data):
     avrg_oct = sum(year_data[273:304])/31
     avrg_nov = sum(year_data[304:334])/30
     avrg_dec = sum(year_data[334:365])/31
+    
     month = np.array(["janv", "fev", "mars", "avril", "mai", "juin", "juil", "aout", "sept", "oct", "nov", "dec"]).reshape((12,1))
     avrg = np.array([avrg_janv, avrg_fev, avrg_mars, avrg_avril, avrg_mai, avrg_juin, avrg_juil, avrg_aout, avrg_sept, avrg_oct, avrg_nov, avrg_dec]) #tableau contenant les moyennes (des arrays de dimension (1,1))
     month_avrg = np.hstack((month, avrg)) #tableau contenant les mois avec leur température moyenne
-    year_average = 0
     
+    year_average = 0
     for i in range(len(avrg)):
         year_average += avrg[i][0]/12
-    
-    
-   
-    
-    
     
     return ("AVERAGE TEMPERATURE EVERY MONTH", month_avrg), ("AVERAGE TEMPERATURE THAT YEAR", year_average)
 
@@ -62,7 +60,7 @@ print("2001\n", average_temperature(temperatures_2001))
 print("2011\n", average_temperature(temperatures_2011))
 
 
-    
-    
 
-"""["janv", "fev", "mars", "avril", "mai", "juin", "juil", "aout", "sept", "oct", "nov", "dec"]"""
+
+    
+    
