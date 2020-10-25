@@ -30,37 +30,50 @@ start_date_2011 = '2011-01-01'
 end_date_2011 = '2011-12-31'
 temperatures_2011 = temperatures_aigle[start_date_2011 : end_date_2011].values
 
-def average_temperature(year_data):
-    avrg_janv = sum(year_data[0:31])/31
-    avrg_fev = sum(year_data[31:59])/28
-    avrg_mars = sum(year_data[59:90])/31
-    avrg_avril = sum(year_data[90:120])/30
-    avrg_mai = sum(year_data[120:151])/31
-    avrg_juin = sum(year_data[151:181])/30
-    avrg_juil = sum(year_data[181:212])/31
-    avrg_aout = sum(year_data[212:243])/31
-    avrg_sept = sum(year_data[243:273])/30
-    avrg_oct = sum(year_data[273:304])/31
-    avrg_nov = sum(year_data[304:334])/30
-    avrg_dec = sum(year_data[334:365])/31
+def Average_Temperature(year_data, year):
+    avrg_janv = np.nanmean(year_data[0:31])
+    avrg_fev = np.nanmean(year_data[31:59])
+    avrg_mars = np.nanmean(year_data[59:90])
+    avrg_avril = np.nanmean(year_data[90:120])
+    avrg_mai = np.nanmean(year_data[120:151])
+    avrg_juin = np.nanmean(year_data[151:181])
+    avrg_juil = np.nanmean(year_data[181:212])
+    avrg_aout = np.nanmean(year_data[212:243])
+    avrg_sept = np.nanmean(year_data[243:273])
+    avrg_oct = np.nanmean(year_data[273:304])
+    avrg_nov = np.nanmean(year_data[304:334])
+    avrg_dec = np.nanmean(year_data[334:365])
     
-    month = np.array(["janv", "fev", "mars", "avril", "mai", "juin", "juil", "aout", "sept", "oct", "nov", "dec"]).reshape((12,1))
+    """month = np.array(["janv", "fev", "mars", "avril", "mai", "juin", "juil", "aout", "sept", "oct", "nov", "dec"])"""
     avrg = np.array([avrg_janv, avrg_fev, avrg_mars, avrg_avril, avrg_mai, avrg_juin, avrg_juil, avrg_aout, avrg_sept, avrg_oct, avrg_nov, avrg_dec]) #tableau contenant les moyennes (des arrays de dimension (1,1))
-    month_avrg = np.hstack((month, avrg)) #tableau contenant les mois avec leur température moyenne
     
     year_average = 0
     for i in range(len(avrg)):
-        year_average += avrg[i][0]/12
+        year_average += avrg[i]/12
     
-    return ("AVERAGE TEMPERATURE EVERY MONTH", month_avrg), ("AVERAGE TEMPERATURE THAT YEAR", year_average)
+    return ("Average temperature", avrg), ("Year average", (format(year_average, ".2f")))
 
-print("1981\n", average_temperature(temperatures_1981))
-print("\n1991\n", average_temperature(temperatures_1991))
-print("2001\n", average_temperature(temperatures_2001))
-print("2011\n", average_temperature(temperatures_2011))
+"""print("1981\n", Average_Temperature(temperatures_1981, 1981))
+print("\n1991\n", Average_Temperature(temperatures_1991, 1991))
+print("2001\n", Average_Temperature(temperatures_2001, 2001))
+print("2011\n", Average_Temperature(temperatures_2011, 2011))"""
+
+mean_1981, year_avrg_1981 = Average_Temperature(temperatures_1981, 1981) 
+mean_1991, year_avrg_1991 = Average_Temperature(temperatures_1991, 1991)
+mean_2001, year_avrg_2001 = Average_Temperature(temperatures_2001, 2001)
+mean_2011, year_avrg_2011 = Average_Temperature(temperatures_2011, 2011)
 
 
-
-
-    
-    
+plt.figure(figsize=(8,6), dpi=120)
+x = np.arange(1,13)
+plt.plot(x, mean_1981[1], color='b', label='1981 mean = ' +str(year_avrg_1981[1])) 
+plt.plot(x, mean_1991[1], color='g', label='1991 mean = ' +str(year_avrg_1991[1]))           
+plt.plot(x, mean_2001[1], color='tab:orange', label='2001 mean = ' +str(year_avrg_2001[1]))
+plt.plot(x, mean_2011[1], color='r', label='2011 mean = ' +str(year_avrg_2011[1]))
+plt.xticks([1,2,3,4,5,6,7,8,9,10,11,12],["janv", "fev", "mars", "avril", "mai", "juin", "juil", "aout", "sept", "oct", "nov", "dec"])
+plt.grid(axis="y")
+plt.xlabel("months")
+plt.ylabel("mean temperature")
+plt.title("Aigle - Average temperature per month")
+plt.legend()
+plt.show()
